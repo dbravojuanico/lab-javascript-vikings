@@ -57,23 +57,37 @@ class War {
         this.saxonArmy.push(a_Saxon_object)
     }
     vikingAttack(){
-        this.saxonArmy[0].health -= this.vikingArmy[0].strength
-        if (this.saxonArmy[0].health < 1){
-            this.saxonArmy.shift()
+        let randomVikingIdex = Math.floor(Math.random()*this.vikingArmy.length)
+        let randomViking = this.vikingArmy[randomVikingIdex]
+
+        let randomSaxonIdex = Math.floor(Math.random()*this.saxonArmy.length)
+        let randomSaxon = this.saxonArmy[randomSaxonIdex]
+
+        let vikingPower = randomViking.attack()
+
+        let resultOfAttack = randomSaxon.receiveDamage(vikingPower)
+
+        if (randomSaxon.health <= 1){
+            this.saxonArmy.splice(randomSaxonIdex, 1);
         }
-        return 'A Saxon has died in combat'
+        return resultOfAttack
     }
 
-    saxonAttack(){
-        
-        for (let x=0; x < this.vikingArmy.length; x++){
-            this.vikingArmy[x].health -= this.saxonArmy[0].strength
-            if (this.vikingArmy[x].health < 1){
-                this.vikingArmy.shift()
-            }
+    saxonAttack(){ 
+        let randomVikingIdex = Math.floor(Math.random()*this.vikingArmy.length)
+        let randomViking = this.vikingArmy[randomVikingIdex]
+
+        let randomSaxonIdex = Math.floor(Math.random()*this.saxonArmy.length)
+        let randomSaxon = this.saxonArmy[randomSaxonIdex]
+
+        let saxonPower = randomSaxon.attack()
+
+        let resultOfAttack = randomViking.receiveDamage(saxonPower)
+
+        if (randomViking.health <= 1){
+            this.vikingArmy.splice(randomVikingIdex, 1);
         }
-        
-        `${vikingArmy[0].name} has received ${saxonArmy[0].strength} points of damage`
+        return resultOfAttack
     }
 
     showStatus(){
